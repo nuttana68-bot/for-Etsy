@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etsy Creator Tile & Mockup Assistant</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'Prompt', 'sans-serif'],
+                    },
+                    colors: {
+                        terracotta: {
+                            50: '#fdf8f6',
+                            100: '#fbeee9',
+                            500: '#e07a5f',
+                            600: '#d96b4e',
+                            700: '#b84e34',
+                        },
+                        cream: {
+                            50: '#fdfbf7',
+                            100: '#f7f4ed',
+                            200: '#eee8da',
+                        },
+                        charcoal: '#2b2d42'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fdfbf7;
+            color: #2b2d42;
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f7f4ed;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #d1c7b7;
+            border-radius: 4px;
+        }
+        /* Pattern grid overlay styles */
+        .grid-line-overlay {
+            background-size: 100px 100px;
+            background-image: 
+                linear-gradient(to right, rgba(224, 122, 95, 0.4) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(224, 122, 95, 0.4) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col font-sans antialiased selection:bg-terracotta-100 selection:text-terracotta-700">
+
+    <!-- Header -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-cream-200 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-terracotta-500 to-amber-600 flex items-center justify-center text-white font-bold text-xl shadow-sm">
+                    🎨
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg leading-tight text-charcoal">Etsy Creator Assistant</h1>
+                    <p class="text-xs text-gray-500">Tile Checker • Tote Mockup • Etsy SEO Helper</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> Free Client-Side Tool
+                </span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col lg:flex-row gap-6">
+
+        <!-- Left Sidebar: File Upload & Global Controls -->
+        <aside class="w-full lg:w-80 flex-shrink-0 space-y-5">
+            <!-- Upload Card -->
+            <div class="bg-white rounded-2xl p-5 border border-cream-200 shadow-sm">
+                <h2 class="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-3 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-terracotta-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                    1. Upload Artwork
+                </h2>
+                
+                <!-- Dropzone -->
+                <div id="dropzone" class="border-2 border-dashed border-cream-200 hover:border-terracotta-500 transition-colors duration-200 rounded-xl p-4 text-center cursor-pointer bg-cream-50 hover:bg-terracotta-50/30 group">
+                    <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp" class="hidden">
+                    <div class="flex flex-col items-center justify-center space-y-2">
+                        <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                            <svg class="w-6 h-6 text-terracotta-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/></svg>
+                        </div>
+                        <div>
+                            <p class="text-xs font-semibold text-charcoal">Drag & drop your artwork</p>
+                            <p class="text-[11px] text-gray-400 mt-0.5">PNG, JPG or WEBP (Max 300 DPI)</p>
+                        </div>
+                        <button type="button" class="mt-2 text-xs font-medium text-terracotta-600 bg-white border border-cream-200 px-3 py-1.5 rounded-lg shadow-sm hover:bg-terracotta-50">
+                            Browse File
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Preview Thumbnail -->
+                <div id="uploadPreviewContainer" class="mt-4 pt-4 border-t border-cream-100 flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-lg bg-cream-100 overflow-hidden border border-cream-200 flex-shrink-0 relative group">
+                        <img id="uploadPreviewImg" src="" alt="Uploaded asset" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p id="uploadFileName" class="text-xs font-medium text-charcoal truncate">Default Demo Pattern</p>
+                        <p id="uploadFileSpecs" class="text-[11px] text-gray-400">Sample Seamless Pattern</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Workflow Guide Quick Note -->
+            <div class="bg-amber-50/60 rounded-2xl p-4 border border-amber-200/60 text-xs text-amber-900 space-y-2">
+                <div class="font-semibold flex items-center gap-1.5 text-amber-800">
+                    <span>💡</span> Tips for Etsy Sellers
+                </div>
+                <p class="text-[11px] leading-relaxed text-amber-800/90">
+                     seamless patterns ต้องมีขนาดสัดส่วน 1:1 (เช่น 4000x4000px) ความละเอียด 300 DPI สำหรับงานพิมพ์ดิจิทัลคุณภาพสูง
+                </p>
+            </div>
+        </aside>
+
+        <!-- Right Content Area: Tabs & Workspace -->
+        <div class="flex-1 flex flex-col space-y-4 min-w-0">
+            
+            <!-- Navigation Tabs -->
+            <div class="bg-white rounded-2xl p-1.5 border border-cream-200 shadow-sm flex space-x-1">
+                <button id="tabBtnTile" onclick="switchTab('tile')" class="flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center space-x-2 bg-terracotta-500 text-white shadow-sm">
+                    <span>🧩</span>
+                    <span>Seamless Tile Checker</span>
+                </button>
+                <button id="tabBtnMockup" onclick="switchTab('mockup')" class="flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center space-x-2 text-gray-600 hover:text-charcoal hover:bg-cream-50">
+                    <span>👜</span>
+                    <span>Tote Bag Mockup</span>
+                </button>
+                <button id="tabBtnSeo" onclick="switchTab('seo')" class="flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center space-x-2 text-gray-600 hover:text-charcoal hover:bg-cream-50">
+                    <span>🏷️</span>
+                    <span>Etsy SEO Helper</span>
+                </button>
+            </div>
+
+            <!-- TAB 1: Seamless Tile Checker -->
+            <div id="tabContentTile" class="bg-white rounded-2xl border border-cream-200 shadow-sm p-5 space-y-5">
+                
+                <!-- Controls Row -->
+                <div class="flex flex-wrap items-center justify-between gap-4 p-4 bg-cream-50 rounded-xl border border-cream-200/80">
+                    <!-- Zoom/Scale Slider -->
+                    <div class="flex items-center space-x-3 min-w-[200px] flex-1">
+                        <label class="text-xs font-semibold text-gray-600 whitespace-nowrap">Tile Scale:</label>
+                        <input type="range" id="tileScale" min="20" max="250" value="100" class="w-full accent-terracotta-500 cursor-pointer">
+                        <span id="tileScaleVal" class="text-xs font-mono font-medium text-gray-700 w-10">100%</span>
+                    </div>
+
+                    <!-- Background Color Picker -->
+                    <div class="flex items-center space-x-2">
+                        <label class="text-xs font-semibold text-gray-600">Grid Canvas BG:</label>
+                        <input type="color" id="tileBgColor" value="#ffffff" class="w-7 h-7 rounded border border-gray-300 cursor-pointer">
+                    </div>
+
+                    <!-- Show Grid Lines Toggle -->
+                    <div class="flex items-center space-x-2">
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="toggleGridLines" class="sr-only peer">
+                            <div class="w-9 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-terracotta-500 relative"></div>
+                            <span class="ml-2 text-xs font-semibold text-gray-700">Grid Seam Lines</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Tile Interactive Preview Area -->
+                <div class="relative w-full h-[460px] rounded-xl border border-cream-200 overflow-hidden shadow-inner flex items-center justify-center bg-white">
+                    <!-- Background Repeating Div -->
+                    <div id="tilePreviewBox" class="absolute inset-0 transition-all duration-75" style="background-repeat: repeat; background-position: center;"></div>
+                    
+                    <!-- Overlay Grid Lines -->
+                    <div id="gridOverlay" class="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-200 grid-line-overlay"></div>
+
+                    <!-- Status overlay badge -->
+                    <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium text-gray-600 border border-cream-200 shadow-sm pointer-events-none">
+                        Seamless Preview Mode
+                    </div>
+                </div>
+
+                <!-- Inspection Checklist -->
+                <div class="border-t border-cream-100 pt-4">
+                    <h3 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2">Seamless Quality Inspection Checklist</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+                        <div class="p-3 bg-cream-50 rounded-xl border border-cream-200/60 flex items-start space-x-2">
+                            <span class="text-emerald-500 font-bold">✓</span>
+                            <div>
+                                <p class="font-semibold text-charcoal">Four Corners Check</p>
+                                <p class="text-gray-500 text-[11px]">เปิด Grid Lines เพื่อเช็กว่าจุดบรรจบของทั้ง 4 มุมเชื่อมต่อกันเนียนหรือไม่</p>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-cream-50 rounded-xl border border-cream-200/60 flex items-start space-x-2">
+                            <span class="text-emerald-500 font-bold">✓</span>
+                            <div>
+                                <p class="font-semibold text-charcoal">Density & Scale</p>
+                                <p class="text-gray-500 text-[11px]">ปรับซูมเข้า-ออก เพื่อดูความหนาแน่นและความสวยงามเมื่อนำไปพิมพ์งานจริง</p>
+                            </div>
+                        </div>
+                        <div class="p-3 bg-cream-50 rounded-xl border border-cream-200/60 flex items-start space-x-2">
+                            <span class="text-emerald-500 font-bold">✓</span>
+                            <div>
+                                <p class="font-semibold text-charcoal">No Line Glitch</p>
+                                <p class="text-gray-500 text-[11px]">ตรวจสอบว่าไม่มีเส้นขอบขาวหรือรอยแหว่งโหว่ตามขอบภาพ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TAB 2: Tote Bag Mockup Previewer -->
+            <div id="tabContentMockup" class="hidden bg-white rounded-2xl border border-cream-200 shadow-sm p-5 space-y-5">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                    
+                    <!-- Canvas Canvas View (Left 7 Cols) -->
+                    <div class="lg:col-span-7 flex flex-col items-center justify-center bg-cream-50 rounded-xl p-4 border border-cream-200 relative">
+                        <canvas id="mockupCanvas" width="600" height="600" class="w-full h-auto max-w-[500px] rounded-lg shadow-sm bg-white"></canvas>
+                        
+                        <div class="mt-3 w-full flex items-center justify-between px-2">
+                            <span class="text-xs text-gray-500">Realistic Fabric & Texture Composite</span>
+                            <button onclick="exportMockup()" class="bg-terracotta-500 hover:bg-terracotta-600 text-white font-semibold text-xs px-4 py-2 rounded-xl shadow-sm transition-colors flex items-center gap-1.5">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                                Export Mockup (PNG)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Mockup Controls (Right 5 Cols) -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <h3 class="text-sm font-bold text-charcoal border-b border-cream-200 pb-2">Mockup Settings</h3>
+                        
+                        <!-- Layout Mode -->
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-2">Print Layout Style</label>
+                            <div class="grid grid-cols-2 gap-2">
+                                <button type="button" id="btnModePlacement" onclick="setMockupMode('placement')" class="py-2 px-3 text-xs font-semibold rounded-xl border border-terracotta-500 bg-terracotta-50 text-terracotta-700">
+                                    Placement Print
+                                </button>
+                                <button type="button" id="btnModePattern" onclick="setMockupMode('pattern')" class="py-2 px-3 text-xs font-semibold rounded-xl border border-cream-200 bg-white text-gray-600 hover:bg-cream-50">
+                                    Full Pattern Wrap
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Fabric Color Switcher -->
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-2">Tote Bag Fabric Color</label>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="setBagColor('#F4EFE6')" class="w-7 h-7 rounded-full bg-[#F4EFE6] border-2 border-gray-400 focus:outline-none" title="Natural Canvas"></button>
+                                <button onclick="setBagColor('#FFFFFF')" class="w-7 h-7 rounded-full bg-white border border-gray-300 focus:outline-none" title="Crisp White"></button>
+                                <button onclick="setBagColor('#2b2d42')" class="w-7 h-7 rounded-full bg-[#2b2d42] border border-gray-300 focus:outline-none" title="Midnight Black"></button>
+                                <button onclick="setBagColor('#E8D3D3')" class="w-7 h-7 rounded-full bg-[#E8D3D3] border border-gray-300 focus:outline-none" title="Dusty Rose"></button>
+                                <button onclick="setBagColor('#D4DEC9')" class="w-7 h-7 rounded-full bg-[#D4DEC9] border border-gray-300 focus:outline-none" title="Sage Green"></button>
+                            </div>
+                        </div>
+
+                        <!-- Graphic Scale Slider -->
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="text-xs font-semibold text-gray-600">Graphic Size / Scale</label>
+                                <span id="mockupScaleVal" class="text-xs font-mono text-gray-500">60%</span>
+                            </div>
+                            <input type="range" id="mockupScale" min="20" max="180" value="60" class="w-full accent-terracotta-500 cursor-pointer">
+                        </div>
+
+                        <!-- Position Vertical Offset -->
+                        <div>
+                            <div class="flex justify-between items-center mb-1">
+                                <label class="text-xs font-semibold text-gray-600">Vertical Offset (Y Position)</label>
+                                <span id="mockupYVal" class="text-xs font-mono text-gray-500">0px</span>
+                            </div>
+                            <input type="range" id="mockupOffsetY" min="-100" max="100" value="0" class="w-full accent-terracotta-500 cursor-pointer">
+                        </div>
+
+                        <!-- Watermark Toggle -->
+                        <div class="pt-2 border-t border-cream-200">
+                            <label class="inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="toggleWatermark" checked class="sr-only peer">
+                                <div class="w-9 h-5 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-terracotta-500 relative"></div>
+                                <span class="ml-2 text-xs font-semibold text-gray-700">Add Watermark Protection</span>
+                            </label>
+                            <p class="text-[11px] text-gray-400 mt-0.5">พาดลายน้ำกันคนแคปรูป Mockup บน Etsy</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- TAB 3: Etsy SEO Helper -->
+            <div id="tabContentSeo" class="hidden bg-white rounded-2xl border border-cream-200 shadow-sm p-5 space-y-6">
+                
+                <div>
+                    <h3 class="text-sm font-bold text-charcoal">Etsy Metadata & SEO Generator</h3>
+                    <p class="text-xs text-gray-500">ช่วยสร้าง ชื่อสินค้า (Title), 13 Tags (จำกัดไม่เกิน 20 ตัวอักษรตามกฎ Etsy) และเงื่อนไขการใช้งานอัตโนมัติ</p>
+                </div>
+
+                <!-- Input Form -->
+                <div class="bg-cream-50 p-4 rounded-xl border border-cream-200 space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Main Style / Theme</label>
+                            <input type="text" id="seoTheme" placeholder="e.g. Floral, Botanical, Boho" value="Watercolor Floral" class="w-full px-3 py-2 text-xs rounded-lg border border-cream-200 focus:outline-none focus:border-terracotta-500 bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Color / Vibe</label>
+                            <input type="text" id="seoVibe" placeholder="e.g. Pastel, Cottagecore, Vintage" value="Pastel Pink" class="w-full px-3 py-2 text-xs rounded-lg border border-cream-200 focus:outline-none focus:border-terracotta-500 bg-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-700 mb-1">Product Format</label>
+                            <select id="seoType" class="w-full px-3 py-2 text-xs rounded-lg border border-cream-200 focus:outline-none focus:border-terracotta-500 bg-white">
+                                <option value="Seamless Pattern">Seamless Pattern (Digital Paper)</option>
+                                <option value="Graphic Clipart">Graphic Clipart / PNG Placement</option>
+                                <option value="Printable Art">Printable Wall Art</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button onclick="generateSeoData()" class="w-full bg-terracotta-500 hover:bg-terracotta-600 text-white font-semibold text-xs py-2.5 rounded-xl shadow-sm transition-colors flex items-center justify-center space-x-2">
+                        <span>✨</span>
+                        <span>Generate Etsy Listing SEO</span>
+                    </button>
+                </div>
+
+                <!-- Generated SEO Results Container -->
+                <div id="seoResults" class="space-y-5">
+                    
+                    <!-- Optimized Title -->
+                    <div class="space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-bold text-gray-700 uppercase tracking-wider">Optimized Etsy Title (<span id="titleCharCount">0</span>/140 chars)</label>
+                            <button onclick="copyToClipboard('generatedTitle')" class="text-xs text-terracotta-600 hover:text-terracotta-700 font-semibold flex items-center gap-1">
+                                📋 Copy Title
+                            </button>
+                        </div>
+                        <div id="generatedTitle" class="p-3 bg-cream-50 rounded-xl border border-cream-200 text-xs font-medium text-charcoal select-all">
+                            <!-- Output -->
+                        </div>
+                    </div>
+
+                    <!-- 13 Etsy Tags Grid -->
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-bold text-gray-700 uppercase tracking-wider">13 Etsy Tags (Max 20 chars per tag)</label>
+                            <button onclick="copyAllTags()" class="text-xs text-terracotta-600 hover:text-terracotta-700 font-semibold flex items-center gap-1">
+                                📋 Copy All 13 Tags (Comma Separated)
+                            </button>
+                        </div>
+                        <div id="tagsContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
+                            <!-- Tags will be injected here -->
+                        </div>
+                    </div>
+
+                    <!-- Description & License Template -->
+                    <div class="space-y-1.5 pt-2">
+                        <div class="flex items-center justify-between">
+                            <label class="text-xs font-bold text-gray-700 uppercase tracking-wider">Commercial License & Description Template</label>
+                            <button onclick="copyToClipboard('generatedDesc')" class="text-xs text-terracotta-600 hover:text-terracotta-700 font-semibold flex items-center gap-1">
+                                📋 Copy Description
+                            </button>
+                        </div>
+                        <pre id="generatedDesc" class="p-4 bg-cream-50 rounded-xl border border-cream-200 text-[11px] font-sans text-gray-700 leading-relaxed whitespace-pre-wrap select-all max-h-60 overflow-y-auto">
+                        </pre>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-charcoal text-white text-xs px-4 py-3 rounded-xl shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 flex items-center space-x-2">
+        <span id="toastIcon">✅</span>
+        <span id="toastMsg">Action completed successfully</span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- State Management ---
+        let currentImage = new Image();
+        let isImageLoaded = false;
+        let mockupMode = 'placement'; // 'placement' or 'pattern'
+        let currentBagColor = '#F4EFE6';
+
+        // --- Demo Placeholder Generator (Initial Load) ---
+        function generateDemoPattern() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 400;
+            const ctx = canvas.getContext('2d');
+
+            // Draw cute pastel floral tile background
+            ctx.fillStyle = '#FFF8F0';
+            ctx.fillRect(0, 0, 400, 400);
+
+            // Draw grid of cute flowers & leaves
+            const drawFlower = (cx, cy, color, size) => {
+                ctx.fillStyle = color;
+                for (let i = 0; i < 5; i++) {
+                    const angle = (i * 72 * Math.PI) / 180;
+                    const px = cx + Math.cos(angle) * (size * 0.6);
+                    const py = cy + Math.sin(angle) * (size * 0.6);
+                    ctx.beginPath();
+                    ctx.arc(px, py, size * 0.5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                ctx.fillStyle = '#F4A261';
+                ctx.beginPath();
+                ctx.arc(cx, cy, size * 0.35, 0, Math.PI * 2);
+                ctx.fill();
+            };
+
+            // Main center flower
+            drawFlower(200, 200, '#E07A5F', 45);
+            // 4 corner seamless repeats
+            drawFlower(0, 0, '#E07A5F', 45);
+            drawFlower(400, 0, '#E07A5F', 45);
+            drawFlower(0, 400, '#E07A5F', 45);
+            drawFlower(400, 400, '#E07A5F', 45);
+
+            // Secondary elements
+            drawFlower(100, 70, '#81B29A', 30);
+            drawFlower(300, 330, '#81B29A', 30);
+            drawFlower(70, 310, '#F2CC8F', 28);
+            drawFlower(330, 90, '#F2CC8F', 28);
+
+            currentImage.src = canvas.toDataURL();
+            currentImage.onload = () => {
+                isImageLoaded = true;
+                document.getElementById('uploadPreviewImg').src = currentImage.src;
+                updateTilePreview();
+                renderMockupCanvas();
+            };
+        }
+
+        // --- File Upload Handler ---
+        const dropzone = document.getElementById('dropzone');
+        const imageInput = document.getElementById('imageInput');
+
+        dropzone.addEventListener('click', () => imageInput.click());
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('border-terracotta-500', 'bg-terracotta-50/50');
+        });
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.classList.remove('border-terracotta-500', 'bg-terracotta-50/50');
+        });
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('border-terracotta-500', 'bg-terracotta-50/50');
+            if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                handleFileSelect(e.dataTransfer.files[0]);
+            }
+        });
+
+        imageInput.addEventListener('change', (e) => {
+            if (e.target.files && e.target.files[0]) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        function handleFileSelect(file) {
+            if (!file.type.match('image.*')) {
+                showToast('❌ Please upload an image file (PNG/JPG)', 'error');
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                currentImage = new Image();
+                currentImage.onload = () => {
+                    isImageLoaded = true;
+                    document.getElementById('uploadPreviewImg').src = e.target.result;
+                    document.getElementById('uploadFileName').textContent = file.name;
+                    document.getElementById('uploadFileSpecs').textContent = `${currentImage.width} x ${currentImage.height} px`;
+                    
+                    updateTilePreview();
+                    renderMockupCanvas();
+                    showToast('🎨 Artwork loaded successfully');
+                };
+                currentImage.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // --- Tab Switching Logic ---
+        function switchTab(tabName) {
+            ['Tile', 'Mockup', 'Seo'].forEach(t => {
+                const content = document.getElementById(`tabContent${t}`);
+                const btn = document.getElementById(`tabBtn${t}`);
+                if (t.toLowerCase() === tabName) {
+                    content.classList.remove('hidden');
+                    btn.className = "flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center space-x-2 bg-terracotta-500 text-white shadow-sm";
+                } else {
+                    content.classList.add('hidden');
+                    btn.className = "flex-1 py-2.5 px-3 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center justify-center space-x-2 text-gray-600 hover:text-charcoal hover:bg-cream-50";
+                }
+            });
+
+            if (tabName === 'mockup') {
+                renderMockupCanvas();
+            } else if (tabName === 'seo') {
+                generateSeoData();
+            }
+        }
+
+        // --- TAB 1: Tile Checker Logic ---
+        const tileScale = document.getElementById('tileScale');
+        const tileScaleVal = document.getElementById('tileScaleVal');
+        const tileBgColor = document.getElementById('tileBgColor');
+        const toggleGridLines = document.getElementById('toggleGridLines');
+        const tilePreviewBox = document.getElementById('tilePreviewBox');
+        const gridOverlay = document.getElementById('gridOverlay');
+
+        function updateTilePreview() {
+            if (!isImageLoaded) return;
+            const scale = tileScale.value;
+            tileScaleVal.textContent = `${scale}%`;
+            
+            tilePreviewBox.style.backgroundImage = `url('${currentImage.src}')`;
+            tilePreviewBox.style.backgroundSize = `${scale * 2}px ${scale * 2}px`;
+            tilePreviewBox.style.backgroundColor = tileBgColor.value;
+
+            // Update overlay line size to match tile boundaries
+            gridOverlay.style.backgroundSize = `${scale * 2}px ${scale * 2}px`;
+        }
+
+        tileScale.addEventListener('input', updateTilePreview);
+        tileBgColor.addEventListener('input', updateTilePreview);
+        toggleGridLines.addEventListener('change', (e) => {
+            gridOverlay.style.opacity = e.target.checked ? '1' : '0';
+        });
+
+
+        // --- TAB 2: Tote Bag Mockup Generator (Canvas Based) ---
+        const mockupCanvas = document.getElementById('mockupCanvas');
+        const ctxMockup = mockupCanvas.getContext('2d');
+        const mockupScale = document.getElementById('mockupScale');
+        const mockupOffsetY = document.getElementById('mockupOffsetY');
+        const toggleWatermark = document.getElementById('toggleWatermark');
+
+        function setMockupMode(mode) {
+            mockupMode = mode;
+            const btnP = document.getElementById('btnModePlacement');
+            const btnW = document.getElementById('btnModePattern');
+            if (mode === 'placement') {
+                btnP.className = "py-2 px-3 text-xs font-semibold rounded-xl border border-terracotta-500 bg-terracotta-50 text-terracotta-700";
+                btnW.className = "py-2 px-3 text-xs font-semibold rounded-xl border border-cream-200 bg-white text-gray-600 hover:bg-cream-50";
+            } else {
+                btnW.className = "py-2 px-3 text-xs font-semibold rounded-xl border border-terracotta-500 bg-terracotta-50 text-terracotta-700";
+                btnP.className = "py-2 px-3 text-xs font-semibold rounded-xl border border-cream-200 bg-white text-gray-600 hover:bg-cream-50";
+            }
+            renderMockupCanvas();
+        }
+
+        function setBagColor(hex) {
+            currentBagColor = hex;
+            renderMockupCanvas();
+        }
+
+        function renderMockupCanvas() {
+            if (!isImageLoaded) return;
+            const width = mockupCanvas.width;
+            const height = mockupCanvas.height;
+            const scaleVal = parseFloat(mockupScale.value) / 100;
+            const offsetY = parseFloat(mockupOffsetY.value);
+
+            document.getElementById('mockupScaleVal').textContent = `${mockupScale.value}%`;
+            document.getElementById('mockupYVal').textContent = `${offsetY}px`;
+
+            // Clear Canvas
+            ctxMockup.clearRect(0, 0, width, height);
+
+            // 1. Draw Mockup Background
+            ctxMockup.fillStyle = '#FDFBF7';
+            ctxMockup.fillRect(0, 0, width, height);
+
+            // Shadow under bag
+            ctxMockup.save();
+            ctxMockup.beginPath();
+            ctxMockup.ellipse(300, 520, 160, 20, 0, 0, Math.PI * 2);
+            ctxMockup.fillStyle = 'rgba(0,0,0,0.06)';
+            ctxMockup.filter = 'blur(10px)';
+            ctxMockup.fill();
+            ctxMockup.restore();
+
+            // 2. Define Tote Bag Body Path
+            const bagPath = new Path2D();
+            bagPath.moveTo(160, 200); // Top Left
+            bagPath.lineTo(440, 200); // Top Right
+            bagPath.quadraticCurveTo(450, 480, 430, 500); // Bottom Right Corner
+            bagPath.lineTo(170, 500); // Bottom Left Corner
+            bagPath.quadraticCurveTo(150, 480, 160, 200); // Back to Top Left
+
+            // 3. Draw Handles (Straps)
+            ctxMockup.save();
+            ctxMockup.lineWidth = 22;
+            ctxMockup.strokeStyle = currentBagColor;
+            ctxMockup.lineCap = 'round';
+
+            // Left Strap
+            ctxMockup.beginPath();
+            ctxMockup.moveTo(220, 205);
+            ctxMockup.bezierCurveTo(210, 70, 260, 70, 260, 205);
+            ctxMockup.stroke();
+
+            // Right Strap
+            ctxMockup.beginPath();
+            ctxMockup.moveTo(340, 205);
+            ctxMockup.bezierCurveTo(340, 70, 390, 70, 380, 205);
+            ctxMockup.stroke();
+
+            // Strap Shading Overlay
+            ctxMockup.lineWidth = 22;
+            ctxMockup.strokeStyle = 'rgba(0,0,0,0.08)';
+            ctxMockup.stroke();
+            ctxMockup.restore();
+
+            // 4. Fill Tote Bag Base Color
+            ctxMockup.save();
+            ctxMockup.fillStyle = currentBagColor;
+            ctxMockup.fill(bagPath);
+
+            // 5. Render Artwork Inside Bag Path (Clipping)
+            ctxMockup.clip(bagPath);
+
+            if (mockupMode === 'pattern') {
+                // Pattern Wrap Mode
+                const patternCanvas = document.createElement('canvas');
+                const pSize = Math.max(40, 150 * scaleVal);
+                patternCanvas.width = pSize;
+                patternCanvas.height = pSize;
+                const pCtx = patternCanvas.getContext('2d');
+                pCtx.drawImage(currentImage, 0, 0, pSize, pSize);
+
+                const pattern = ctxMockup.createPattern(patternCanvas, 'repeat');
+                ctxMockup.fillStyle = pattern;
+                ctxMockup.fillRect(0, 0, width, height);
+            } else {
+                // Placement Print Mode
+                const imgW = 200 * scaleVal;
+                const imgH = (currentImage.height / currentImage.width) * imgW;
+                const imgX = (width - imgW) / 2;
+                const imgY = (height - imgH) / 2 + 50 + offsetY;
+
+                ctxMockup.drawImage(currentImage, imgX, imgY, imgW, imgH);
+            }
+
+            // 6. Realistic Shadow & Texture Overlay on Bag Body
+            // Fabric Gradient Folds
+            const foldGrad = ctxMockup.createLinearGradient(150, 0, 450, 0);
+            foldGrad.addColorStop(0, 'rgba(0, 0, 0, 0.12)');
+            foldGrad.addColorStop(0.2, 'rgba(255, 255, 255, 0.08)');
+            foldGrad.addColorStop(0.5, 'rgba(0, 0, 0, 0.03)');
+            foldGrad.addColorStop(0.8, 'rgba(255, 255, 255, 0.08)');
+            foldGrad.addColorStop(1, 'rgba(0, 0, 0, 0.15)');
+            
+            ctxMockup.fillStyle = foldGrad;
+            ctxMockup.fillRect(0, 0, width, height);
+
+            // Bag Outline Stitching detail
+            ctxMockup.strokeStyle = 'rgba(0,0,0,0.15)';
+            ctxMockup.lineWidth = 2;
+            ctxMockup.stroke(bagPath);
+
+            ctxMockup.restore(); // Exit clip
+
+            // 7. Optional Watermark Overlay
+            if (toggleWatermark.checked) {
+                ctxMockup.save();
+                ctxMockup.translate(width / 2, height / 2 + 30);
+                ctxMockup.rotate(-Math.PI / 6);
+                ctxMockup.font = 'bold 22px sans-serif';
+                ctxMockup.fillStyle = 'rgba(0, 0, 0, 0.22)';
+                ctxMockup.textAlign = 'center';
+                ctxMockup.fillText('PREVIEW • DO NOT COPY', 0, 0);
+                ctxMockup.restore();
+            }
+        }
+
+        mockupScale.addEventListener('input', renderMockupCanvas);
+        mockupOffsetY.addEventListener('input', renderMockupCanvas);
+        toggleWatermark.addEventListener('change', renderMockupCanvas);
+
+        function exportMockup() {
+            if (!isImageLoaded) return;
+            const link = document.createElement('a');
+            link.download = `Etsy-Tote-Mockup-${Date.now()}.png`;
+            link.href = mockupCanvas.toDataURL('image/png');
+            link.click();
+            showToast('📥 Mockup image downloaded!');
+        }
+
+
+        // --- TAB 3: Etsy SEO & Tag Generator Logic ---
+        function generateSeoData() {
+            const theme = document.getElementById('seoTheme').value.trim() || 'Floral';
+            const vibe = document.getElementById('seoVibe').value.trim() || 'Pastel';
+            const type = document.getElementById('seoType').value;
+
+            // Generate Title (<= 140 Chars)
+            const titleStr = `${vibe} ${theme} ${type}, Commercial Use Digital Download, Repeat Pattern for Fabric, Printable Background Paper PNG`.substring(0, 140);
+            
+            document.getElementById('generatedTitle').textContent = titleStr;
+            document.getElementById('titleCharCount').textContent = titleStr.length;
+
+            // Generate 13 Tags (Each <= 20 Chars)
+            const rawTags = [
+                `${theme} pattern`.substring(0, 20),
+                `${vibe} pattern`.substring(0, 20),
+                `seamless pattern`.substring(0, 20),
+                `digital paper`.substring(0, 20),
+                `fabric pattern`.substring(0, 20),
+                `commercial use`.substring(0, 20),
+                `tote bag design`.substring(0, 20),
+                `printable art`.substring(0, 20),
+                `repeat pattern`.substring(0, 20),
+                `craft supplies`.substring(0, 20),
+                `instant download`.substring(0, 20),
+                `${theme} download`.substring(0, 20),
+                `surface pattern`.substring(0, 20)
+            ];
+
+            const tagsContainer = document.getElementById('tagsContainer');
+            tagsContainer.innerHTML = '';
+            
+            rawTags.forEach((tag, idx) => {
+                const tagEl = document.createElement('div');
+                tagEl.className = "p-2 bg-cream-50 rounded-lg border border-cream-200 text-xs flex items-center justify-between group";
+                tagEl.innerHTML = `
+                    <span class="font-mono text-gray-700 truncate">${idx + 1}. ${tag}</span>
+                    <span class="text-[10px] text-gray-400 font-mono">${tag.length}/20</span>
+                `;
+                tagsContainer.appendChild(tagEl);
+            });
+
+            window.generatedTagsString = rawTags.join(', ');
+
+            // Generate Product Description & Commercial Usage Terms
+            const descStr = `✨ ${vibe.toUpperCase()} ${theme.toUpperCase()} ${type.toUpperCase()} ✨
+
+High-quality seamless tile/graphic perfect for digital printing, pod tote bags, apparel, stationary, wrapping paper, and fabric creation!
+
+📦 WHAT IS INCLUDED:
+• 1 High-Resolution Digital File (300 DPI)
+• Seamless Repeat / Transparent Background PNG
+• Instant Digital Download (No physical item shipped)
+
+📜 COMMERCIAL USE TERMS:
+✅ Small Business Commercial Use allowed (Up to 500 physical products).
+✅ POD (Print on Demand) friendly on products like Tote Bags, Shirts, & Mugs.
+❌ You MAY NOT resell, share, or redistribute this digital file as your own.
+
+Thank you for supporting independent surface pattern design! Line & Studio`;
+
+            document.getElementById('generatedDesc').textContent = descStr;
+        }
+
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            copyTextToSystem(text, 'Copied text to clipboard!');
+        }
+
+        function copyAllTags() {
+            if (window.generatedTagsString) {
+                copyTextToSystem(window.generatedTagsString, 'Copied all 13 Etsy tags!');
+            }
+        }
+
+        function copyTextToSystem(text, successMsg) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast(`📋 ${successMsg}`);
+            } catch (err) {
+                showToast('❌ Failed to copy text', 'error');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // Helper Toast Function
+        function showToast(msg, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+            const toastIcon = document.getElementById('toastIcon');
+
+            toastMsg.textContent = msg;
+            toastIcon.textContent = type === 'success' ? '✅' : '⚠️';
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 2600);
+        }
+
+        // Initialize App on Window Load
+        window.onload = function() {
+            generateDemoPattern();
+        };
+    </script>
+</body>
+</html>
